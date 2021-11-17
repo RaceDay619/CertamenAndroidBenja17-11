@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Profesores Sto.Tomás</string>
+    <string name="data1">Nombre</string>
+    <string name="data2">Apellido</string>
+    <string name="data3">Notas</string>
+    <string name="data4">Agregar datos</string>
+    <string name="data5">Ver todos los datos</string>
+    <string name="data6">Actualizar datos</string>
+    <string name="data7">ID Alumno</string>
+    <string name="data11">Bienvenido Profesor(a)</string>
+    <string name="tituloLogin">Inicia sesión</string>
+    <string name="btnLogin">Log In</string>
+    <string name="btnRegiser">Registrarse</string>
+    <string name="eliminardatos">Eliminar Datos</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="asqd">Ubicación</string>
+    <string name="zxcv">de nuestra</string>
+    <string name="rwer">Universidad</string>
+</resources>
