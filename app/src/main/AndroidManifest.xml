@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CertamenAndroid">
         <activity
+            android:name=".activity_registro"
+            android:exported="false" />
+        <activity
             android:name=".UniversidadActivity"
             android:exported="false" />
         <!--
