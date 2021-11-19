@@ -36,7 +36,7 @@ public class LoginActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intento =
-                        new Intent(LoginActivity2.this,MainActivity.class );
+                        new Intent(LoginActivity2.this,activity_registro.class );
                 startActivity(intento);
             }
         });
@@ -49,6 +49,13 @@ public class LoginActivity2 extends AppCompatActivity {
                 // Capturar los datos para pasarlos al método login->DbUsuarios
                 String e = txtEmailLogin.getText().toString();
                 String c = txtClaveLogin.getText().toString();
+
+                if(e.equals("")||c.equals("")){
+                    Toast.makeText(LoginActivity2.this,
+                            "Credenciales no ingresadas"
+                            , Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 Usuario userLog = bd.login(e,c);
 
@@ -69,40 +76,5 @@ public class LoginActivity2 extends AppCompatActivity {
 
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        // condicional - switch
-
-        switch (item.getItemId()) { // tomamos el id del item seleccionado
-            case R.id.menu_inicio:
-                Intent intent1 = new Intent(this, LoginActivity2.class);
-                Toast.makeText(this, "Inicio", Toast.LENGTH_LONG).show();
-                startActivity(intent1);
-                return true;
-
-            case R.id.menu_mapa:
-                Intent intent2 = new Intent(this, UniversidadActivity.class);
-                Toast.makeText(this, "Ubicación", Toast.LENGTH_LONG).show();
-                startActivity(intent2);
-                return true;
-
-            case R.id.menu_notas:
-                Intent intent3 = new Intent(this, MainActivity.class);
-                Toast.makeText(this, "Notas", Toast.LENGTH_LONG).show();
-                startActivity(intent3);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-
-        }
     }
 }

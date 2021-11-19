@@ -19,17 +19,19 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String COL_2 = "NOMBRE";
     public static final String COL_3 = "APELLIDO";
     public static final String COL_4 = "NOTAS";
+    public static final String COL_5 = "ASIGNATURA";
+
 
 
     public DbHelper(@Nullable Context context) {
-        super(context, DATABASE_NAME, null, 1);
+        super(context, DATABASE_NAME, null, 3);
         this.contexto = context;
         SQLiteDatabase db = this.getWritableDatabase();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABLE_NAME +" (ID INTEGER PRIMARY KEY AUTOINCREMENT, NOMBRE TEXT, APELLIDO TEXT, NOTAS INTEGER) ");
+        db.execSQL("create table " + TABLE_NAME +" (ID INTEGER PRIMARY KEY AUTOINCREMENT, NOMBRE TEXT, APELLIDO TEXT, NOTAS INTEGER, ASIGNATURA TEXT) ");
         db.execSQL("CREATE TABLE "+DB_TABLE_USERS+"("+
                 "id INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 "nombres TEXT NOT NULL,"+
@@ -45,12 +47,13 @@ public class DbHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertarDatos(String nombre, String apellido, String notas){
+    public boolean insertarDatos(String nombre, String apellido, String notas, String asignatura){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2,nombre);
         contentValues.put(COL_3,apellido);
         contentValues.put(COL_4,notas);
+        contentValues.put(COL_5,asignatura);
         long result = db.insert(TABLE_NAME,null, contentValues);
         if(result == -1)
             return false;
@@ -64,13 +67,14 @@ public class DbHelper extends SQLiteOpenHelper {
         return res;
     }
 
-    public boolean actualizarDatos(String id,String nombre, String apellido, String notas){
+    public boolean actualizarDatos(String id,String nombre, String apellido, String notas, String asignatura){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_1,id);
         contentValues.put(COL_2,nombre);
         contentValues.put(COL_3,apellido);
         contentValues.put(COL_4,notas);
+        contentValues.put(COL_5,asignatura);
         db.update(TABLE_NAME, contentValues,"ID = ?", new String[]{ id });
         return true;
     }

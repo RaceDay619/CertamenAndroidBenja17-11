@@ -19,7 +19,7 @@ import com.contreras.certamenandroid.sqlite.DbHelper;
 
 public class MainActivity extends AppCompatActivity {
     DbHelper midb;
-    EditText editarNombre,editarApellido,editarNotas, editarID;
+    EditText editarNombre,editarApellido,editarNotas, editarID, editarAsignatura;
     Button btn_agregarDatos;
     Button btn_verTodo;
     Button btn_actualizaDatos;
@@ -35,10 +35,12 @@ public class MainActivity extends AppCompatActivity {
         editarApellido = findViewById(R.id.editText_Apellido);
         editarNotas = findViewById(R.id.editText_Notas);
         editarID = findViewById(R.id.editText_ID);
+        editarAsignatura = findViewById(R.id.editText_Asignatura);
         btn_agregarDatos = findViewById(R.id.btn_agregadatos);
         btn_verTodo = findViewById(R.id.btn_verDatos);
         btn_actualizaDatos = findViewById(R.id.btn_actualizarDatos);
         btn_borrarDatitos = findViewById(R.id.btn_eliminarDatos);
+
 
         AgregarDatos();
         obtenerDatos();
@@ -101,10 +103,22 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        boolean isUpdate = midb.actualizarDatos(editarID.getText().toString(),
-                                editarNombre.getText().toString(),
-                                editarApellido.getText().toString(),
-                                editarNotas.getText().toString());
+                        String id = editarID.getText().toString();
+                        String nombre = editarNombre.getText().toString();
+                        String apellido = editarApellido.getText().toString();
+                        String notas = editarNotas.getText().toString();
+                        String asignatura = editarAsignatura.getText().toString();
+                        if(id.equals("")||nombre.equals("")||apellido.equals("")||notas.equals("")||asignatura.equals("")){
+                            Toast.makeText(MainActivity.this,
+                                    "Credenciales no ingresadas"
+                                    , Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        boolean isUpdate = midb.actualizarDatos(id,
+                                nombre,
+                                apellido,
+                                notas,
+                                asignatura);
                         if(isUpdate == true)
                             Toast.makeText(MainActivity.this, "Datos actualizados correctamente.", Toast.LENGTH_SHORT).show();
                         else
@@ -119,9 +133,20 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        boolean isInserted = midb.insertarDatos(editarNombre.getText().toString(),
-                                editarApellido.getText().toString(),
-                                editarNotas.getText().toString() );
+                        String nombre = editarNombre.getText().toString();
+                        String apellido = editarApellido.getText().toString();
+                        String notas = editarNotas.getText().toString();
+                        String asignatura = editarAsignatura.getText().toString();
+                        if(nombre.equals("")||apellido.equals("")||notas.equals("")||asignatura.equals("")){
+                            Toast.makeText(MainActivity.this,
+                                    "Credenciales no ingresadas"
+                                    , Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        boolean isInserted = midb.insertarDatos(nombre,
+                                apellido,
+                                notas,
+                                asignatura);
                         if(isInserted = true)
                             Toast.makeText(MainActivity.this, "Datos insertados correctamente.", Toast.LENGTH_SHORT).show();
                         else
@@ -146,7 +171,9 @@ public class MainActivity extends AppCompatActivity {
                             buffer.append("ID :"+ res.getString(0)+"\n");
                             buffer.append("NOMBRE :"+ res.getString(1)+"\n");
                             buffer.append("APELLIDO :"+ res.getString(2)+"\n");
-                            buffer.append("NOTAS :"+ res.getString(3)+"\n\n");
+                            buffer.append("NOTAS :"+ res.getString(3)+"\n");
+                            buffer.append("ASIGNATURA :"+ res.getString(4)+"\n");
+
                         }
                         mostrarMensaje("Datos de los alumnos",buffer.toString());
                     }
