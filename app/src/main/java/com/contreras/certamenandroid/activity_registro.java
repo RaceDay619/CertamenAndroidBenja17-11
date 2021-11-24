@@ -2,6 +2,7 @@ package com.contreras.certamenandroid;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -16,7 +17,7 @@ import com.contreras.certamenandroid.sqlite.DbUsuarios;
 public class activity_registro extends AppCompatActivity {
 
     EditText txtNombres, txtApellidos,txtEmail,txtClave;
-    Button btnRegistrar;
+    Button btnRegistrar, btnLoginR;
     Spinner spUsuarios;
 
     public void cargarSpinner(){
@@ -38,6 +39,7 @@ public class activity_registro extends AppCompatActivity {
         txtClave = findViewById(R.id.txtClave);
         btnRegistrar = findViewById(R.id.btnRegistrar);
         spUsuarios = findViewById(R.id.spUsuarios);
+        btnLoginR = findViewById(R.id.btnLogin2);
 
         cargarSpinner();
 
@@ -66,6 +68,15 @@ public class activity_registro extends AppCompatActivity {
                 Toast.makeText(activity_registro.this,
                         "id:"+id, Toast.LENGTH_SHORT).show();
                 cargarSpinner();            }
+        });
+
+         btnLoginR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent2 =
+                        new Intent(activity_registro.this,LoginActivity2.class);
+                startActivity(intent2);
+            }
         });
 
     }
