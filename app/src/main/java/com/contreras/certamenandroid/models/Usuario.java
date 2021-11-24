@@ -8,18 +8,18 @@ public class Usuario {
     private String email;
     private String clave;
 
-    // test
+
     public Usuario() {
     }
 
-    // crear nuevos usuarios
+
     public Usuario(String nombres, String apellidos, String email, String clave) {
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.email = email;
         this.clave = clave;
     }
-    // obtener usuario de la base de datos
+
     public Usuario(int id, String nombres, String apellidos, String email, String clave) {
         this.id = id;
         this.nombres = nombres;
