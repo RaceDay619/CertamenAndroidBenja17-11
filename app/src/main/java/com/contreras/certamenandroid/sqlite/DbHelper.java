@@ -20,24 +20,25 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String COL_3 = "APELLIDO";
     public static final String COL_4 = "NOTAS";
     public static final String COL_5 = "ASIGNATURA";
+    public static final String COL_6 = "USUARIO_ID";
 
 
 
     public DbHelper(@Nullable Context context) {
-        super(context, DATABASE_NAME, null, 4);
+        super(context, DATABASE_NAME, null, 8);
         this.contexto = context;
         SQLiteDatabase db = this.getWritableDatabase();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABLE_NAME +" (ID INTEGER PRIMARY KEY AUTOINCREMENT, NOMBRE TEXT, APELLIDO TEXT, NOTAS INTEGER, ASIGNATURA TEXT) ");
         db.execSQL("CREATE TABLE "+DB_TABLE_USERS+"("+
                 "id INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 "nombres TEXT NOT NULL,"+
                 "apellidos TEXT NOT NULL,"+
                 "email TEXT NOT NULL,"+
                 "clave TEXT NOT NULL)");
+        db.execSQL("create table " + TABLE_NAME +" (ID INTEGER PRIMARY KEY AUTOINCREMENT, NOMBRE TEXT, APELLIDO TEXT, NOTAS INTEGER, ASIGNATURA TEXT, USUARIO_ID INTEGER, FOREIGN KEY(USUARIO_ID) REFERENCES "+DB_TABLE_USERS+"(id)) ");
     }
 
     @Override
@@ -47,13 +48,14 @@ public class DbHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertarDatos(String nombre, String apellido, String notas, String asignatura){
+    public boolean insertarDatos(String nombre, String apellido, String notas, String asignatura, int usuario_id){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2,nombre);
         contentValues.put(COL_3,apellido);
         contentValues.put(COL_4,notas);
         contentValues.put(COL_5,asignatura);
+        contentValues.put(COL_6,usuario_id);
         long result = db.insert(TABLE_NAME,null, contentValues);
         if(result == -1)
             return false;

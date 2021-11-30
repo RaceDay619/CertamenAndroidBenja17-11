@@ -52,13 +52,24 @@ public class activity_registro extends AppCompatActivity {
                 String email = txtEmail.getText().toString();
                 String clave = txtClave.getText().toString();
 
-                if(nombres.equals("")||apellidos.equals("")||email.equals("")||clave.equals("")){
+                if(nombres.equals("")){
                     Toast.makeText(activity_registro.this,
-                            "Credenciales no ingresadas"
+                            "Nombre no ingresado"
                             , Toast.LENGTH_LONG).show();
                     return;
                 }
-
+                if(apellidos.equals("")){
+                    Toast.makeText(activity_registro.this,"Apellido no ingresado", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(email.equals("")){
+                    Toast.makeText(activity_registro.this,"Correo no ingresado", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(clave.equals("")){
+                    Toast.makeText(activity_registro.this,"Contraseña no ingresada", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 Usuario user =
                         new Usuario(nombres,apellidos,email,clave);

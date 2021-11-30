@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/menu_inicio"
-        android:title="Inicio" />
+        android:title="Cerrar sesión" />
     <item
         android:id="@+id/menu_notas"
         android:title="Notas" />

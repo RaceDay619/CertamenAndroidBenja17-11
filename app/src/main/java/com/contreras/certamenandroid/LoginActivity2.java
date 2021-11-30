@@ -49,10 +49,14 @@ public class LoginActivity2 extends AppCompatActivity {
                 String e = txtEmailLogin.getText().toString();
                 String c = txtClaveLogin.getText().toString();
 
-                if(e.equals("")||c.equals("")){
+                if(e.equals("")){
                     Toast.makeText(LoginActivity2.this,
-                            "Credenciales no ingresadas"
+                            "Correo no ingresado"
                             , Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(c.equals("")){
+                    Toast.makeText(LoginActivity2.this,"Contraseña no ingresada", Toast.LENGTH_LONG).show();
                     return;
                 }
 

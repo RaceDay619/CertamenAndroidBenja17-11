@@ -56,7 +56,7 @@ public class UniversidadActivity extends AppCompatActivity {
         switch (item.getItemId()) { // tomamos el id del item seleccionado
             case R.id.menu_inicio:
                 Intent intent1 = new Intent(this, LoginActivity2.class);
-                Toast.makeText(this, "Inicio", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Sesión Cerrada", Toast.LENGTH_LONG).show();
                 startActivity(intent1);
                 return true;
 

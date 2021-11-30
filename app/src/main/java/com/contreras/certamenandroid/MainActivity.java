@@ -11,11 +11,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.contreras.certamenandroid.sqlite.DbHelper;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     DbHelper midb;
@@ -24,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     Button btn_verTodo;
     Button btn_actualizaDatos;
     Button btn_borrarDatitos;
+    Spinner spAlumnosReg;
 
 
     @Override
@@ -35,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
         editarNombre = findViewById(R.id.editText_Nombre);
         editarApellido = findViewById(R.id.editText_Apellido);
         editarNotas = findViewById(R.id.editText_Notas);
-        editarID = findViewById(R.id.editText_ID);
         editarAsignatura = findViewById(R.id.editText_Asignatura);
+        editarID = findViewById(R.id.editText_ID);
         btn_agregarDatos = findViewById(R.id.btn_agregadatos);
         btn_verTodo = findViewById(R.id.btn_verDatos);
         btn_actualizaDatos = findViewById(R.id.btn_actualizarDatos);
@@ -63,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) { // tomamos el id del item seleccionado
             case R.id.menu_inicio:
                 Intent intent1 = new Intent(this, LoginActivity2.class);
-                Toast.makeText(this, "Inicio", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Sesión Cerrada", Toast.LENGTH_LONG).show();
                 startActivity(intent1);
                 return true;
 
@@ -138,17 +143,32 @@ public class MainActivity extends AppCompatActivity {
                         String apellido = editarApellido.getText().toString();
                         String notas = editarNotas.getText().toString();
                         String asignatura = editarAsignatura.getText().toString();
-                        if(nombre.equals("")||apellido.equals("")||notas.equals("")||asignatura.equals("")){
+                        int usuario_id = LoginActivity2.usuario_logeado.getId();
+                        if(nombre.equals("")){
                             Toast.makeText(MainActivity.this,
-                                    "Credenciales no ingresadas"
+                                    "Nombre no ingresado"
                                     , Toast.LENGTH_LONG).show();
                             return;
                         }
+                        if(apellido.equals("")){
+                            Toast.makeText(MainActivity.this,"Apellido no ingresado", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        if(notas.equals("")){
+                            Toast.makeText(MainActivity.this,"Nota no ingresada", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        if(asignatura.equals("")){
+                            Toast.makeText(MainActivity.this,"Asignatura no ingresada", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
                         boolean isInserted = midb.insertarDatos(nombre,
                                 apellido,
                                 notas,
-                                asignatura);
-                        if(isInserted = true)
+                                asignatura,
+                                usuario_id);
+                        if(isInserted == true)
                             Toast.makeText(MainActivity.this, "Datos insertados correctamente.", Toast.LENGTH_SHORT).show();
                         else
                             Toast.makeText(MainActivity.this, "Falló, datos no insertados.", Toast.LENGTH_SHORT).show();
@@ -169,14 +189,20 @@ public class MainActivity extends AppCompatActivity {
                         }
                         StringBuffer buffer = new StringBuffer();
                         while (res.moveToNext()){
-                            buffer.append("ID :"+ res.getString(0)+"\n");
-                            buffer.append("NOMBRE :"+ res.getString(1)+"\n");
-                            buffer.append("APELLIDO :"+ res.getString(2)+"\n");
-                            buffer.append("NOTAS :"+ res.getString(3)+"\n");
-                            buffer.append("ASIGNATURA :"+ res.getString(4)+"\n");
+                            if (res.getInt(5)==LoginActivity2.usuario_logeado.getId()){
+                                buffer.append("ID :"+ res.getString(0)+"\n");
+                                buffer.append("NOMBRE :"+ res.getString(1)+"\n");
+                                buffer.append("APELLIDO :"+ res.getString(2)+"\n");
+                                buffer.append("NOTAS :"+ res.getString(3)+"\n");
+                                buffer.append("ASIGNATURA :"+ res.getString(4)+"\n\n");
 
+                            }
                         }
-                        mostrarMensaje("Datos de los alumnos",buffer.toString());
+                        if (buffer.equals("")){
+                            mostrarMensaje("Error","No hay alumnos en la base de datos.");
+                        }else{
+                            mostrarMensaje("Datos de los alumnos",buffer.toString());
+                        }
                     }
                 }
         );
